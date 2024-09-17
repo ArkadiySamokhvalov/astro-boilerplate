@@ -4,9 +4,14 @@ import { defineConfig } from "astro/config";
 import purgecss from "astro-purgecss";
 import Compress from "@playform/compress";
 
+import icon from "astro-icon";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
+    icon({
+      iconDir: "src/assets/icons",
+    }),
     purgecss({
       variables: true,
 
