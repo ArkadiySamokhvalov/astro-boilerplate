@@ -4,13 +4,17 @@
   "version": "0.0.1",
   "scripts": {
     "prepare": "husky",
-    "lint-staged": "lint-staged - config .lintstagedrc",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write ."
+    "check": "astro check",
+    "format": "prettier --write --ignore-unknown .",
+    "editorconfig": "editorconfig-checker -exclude \"**/node_modules/**\"",
+    "lintjs": "eslint . --fix",
+    "lintcss": "stylelint \"src/**/*.{css,astro}\" --fix",
+    "test": "npm run editorconfig && npm run lintcss && npm run lintjs && npm run check"
   },
   "browserslist": [
     "last 2 version",
@@ -24,18 +28,51 @@
       "config": ".cz-config.cjs"
     }
   },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix --max-warnings 0",
+      "prettier --write"
+    ],
+    "**/*.astro": [
+      "eslint --fix --max-warnings 0",
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "**/*.{css,scss}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "!**/*.{js,jsx,ts,tsx,astro,css,scss}": "prettier --write --ignore-unknown"
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
     "astro": "^4.15.5",
+    "astro-purgecss": "^4.6.0",
+    "purgecss": "^6.0.0",
     "typescript": "^5.6.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
+    "@playform/compress": "^0.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "autoprefixer": "^10.4.20",
     "commitizen": "^4.3.0",
+    "cssnano": "^7.0.6",
     "cz-customizable": "^7.2.1",
+    "editorconfig-checker": "^5.1.8",
+    "eslint": "^9.10.0",
+    "eslint-plugin-astro": "^1.2.4",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
     "lint-staged": "^15.2.10",
+    "postcss-html": "^1.7.0",
+    "postcss-preset-env": "^10.0.3",
     "prettier": "^3.3.3",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "stylelint": "^16.9.0",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-order": "^6.0.4"
   }
 }
